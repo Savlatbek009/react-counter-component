@@ -1,70 +1,12 @@
-import React from "react";
 import "./App.css";
+import Form from "./components/Form";
+import { Component } from "react";
 
-export default class App extends React.Component {
-  state = {
-    count: 0,
-    isCounting: false,
-  };
-
-  componentDidMount() {
-    console.log("componentDidMount");
-    const userCount = localStorage.getItem("time");
-    if (userCount) {
-      this.setState({ count: +userCount });
-    }
-  }
-
-  componentDidUpdate() {
-    console.log("componentDidUpdate");
-    localStorage.setItem("time", this.state.count);
-  }
-  handleStart = () => {
-    this.setState({ isCounting: true });
-
-    this.counterId = setInterval(() => {
-      this.setState({ count: this.state.count + 1 });
-    }, 1000);
-  };
-
-  handleStop = () => {
-    this.setState({ isCounting: false });
-    clearInterval(this.counterId);
-  };
-  handleOut = () => {
-    const userCount = localStorage.removeItem("time");
-    if (userCount) {
-      this.setState({ count: userCount });
-    }
-    this.setState({ isCounting: false });
-    clearInterval(this.counterId);
-    this.setState({ count: 0 });
-  };
-  handleReset = () => {
-    this.setState({ isCounting: false });
-    clearInterval(this.counterId);
-    this.setState({ count: 0 });
-  };
+export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <p>React Timer</p>
-        <p>{this.state.count}</p>
-        {!this.state.isCounting ? (
-          <button className="success" onClick={this.handleStart}>
-            Start
-          </button>
-        ) : (
-          <button className="danger" onClick={this.handleStop}>
-            Stop
-          </button>
-        )}
-        <button className="primary" onClick={this.handleOut}>
-          delete
-        </button>
-        <button className="secondary" onClick={this.handleReset}>
-          Reset
-        </button>
+        <Form />
       </div>
     );
   }
